@@ -26,11 +26,15 @@ class BabySitterKataTests: XCTestCase {
     dateFormatter.dateFormat = dateFormat
     
     if let startTime: NSDate = dateFormatter.dateFromString("01:00:22") {
-      XCTAssert(babySitter.setStartTime(startTime), "BabySitter started earlier than 5PM.")
+      XCTAssert(babySitter.setStartTime(startTime) == false, "BabySitter started earlier than 5PM.")
     }
     
-    if let startTime: NSDate = dateFormatter.dateFromString("05:00:22") {
-      XCTAssert(babySitter.setStartTime(startTime), "BabySitter started earlier than 5PM.")
+    if let startTime: NSDate = dateFormatter.dateFromString("05:00:00") {
+      XCTAssert(babySitter.setStartTime(startTime), "BabySitter started later than 5PM.")
+    }
+    
+    if let startTime: NSDate = dateFormatter.dateFromString("09:44:22") {
+      XCTAssert(babySitter.setStartTime(startTime), "BabySitter started later than 5PM.")
     }
     
   }
