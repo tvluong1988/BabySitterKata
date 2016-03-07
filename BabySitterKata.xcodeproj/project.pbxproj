@@ -14,6 +14,7 @@
 		8BCC3B681C8DD20B00249684 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8BCC3B661C8DD20B00249684 /* LaunchScreen.storyboard */; };
 		8BCC3B731C8DD20B00249684 /* BabySitterKataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BCC3B721C8DD20B00249684 /* BabySitterKataTests.swift */; };
 		8BCC3B7F1C8DD27800249684 /* BabySitterKataRules in Resources */ = {isa = PBXBuildFile; fileRef = 8BCC3B7E1C8DD27800249684 /* BabySitterKataRules */; };
+		8BCC3B811C8DD9DF00249684 /* BabySitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BCC3B801C8DD9DF00249684 /* BabySitter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +39,7 @@
 		8BCC3B721C8DD20B00249684 /* BabySitterKataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BabySitterKataTests.swift; sourceTree = "<group>"; };
 		8BCC3B741C8DD20B00249684 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8BCC3B7E1C8DD27800249684 /* BabySitterKataRules */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = BabySitterKataRules; sourceTree = "<group>"; };
+		8BCC3B801C8DD9DF00249684 /* BabySitter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BabySitter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +83,7 @@
 			children = (
 				8BCC3B7D1C8DD21B00249684 /* Support */,
 				8BCC3B7E1C8DD27800249684 /* BabySitterKataRules */,
+				8BCC3B801C8DD9DF00249684 /* BabySitter.swift */,
 			);
 			path = BabySitterKata;
 			sourceTree = "<group>";
@@ -209,6 +212,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8BCC3B811C8DD9DF00249684 /* BabySitter.swift in Sources */,
 				8BCC3B601C8DD20B00249684 /* ViewController.swift in Sources */,
 				8BCC3B5E1C8DD20B00249684 /* AppDelegate.swift in Sources */,
 			);
