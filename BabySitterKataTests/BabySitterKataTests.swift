@@ -180,6 +180,65 @@ class BabySitterKataTests: XCTestCase {
     
   }
   
+  func testsBabySitterCalculatePayFromMidnightToEndOfJobTime() {
+    let babySitter = BabySitter()
+    
+    let dateFormat = "yyyy-mm-dd HH:mm:ss"
+    let dateFormatter = NSDateFormatter()
+    dateFormatter.dateFormat = dateFormat
+    
+    // startTime is earlier than midnight, endTime is earlier than midnight
+    if let startTime: NSDate = dateFormatter.dateFromString("2016-03-01 17:00:00"),
+      let endTime: NSDate = dateFormatter.dateFromString("2016-03-01 20:00:00"),
+      let midnight: NSDate = dateFormatter.dateFromString("2016-03-02 00:00:00") {
+        
+        let correctPay: Double = 16 * 0 // $16/hr for 0hr
+        
+        XCTAssert(babySitter.calculatePayFromMidnightToEndOfJobTime(startTime, endTime: endTime, midnight: midnight) == correctPay, "BabySitter calculatePayFromMidnightToEndOfJobTime incorrect.")
+    }
+    
+    // startTime is earlier than midnight, endTime is earlier than endOfJobTime
+    if let startTime: NSDate = dateFormatter.dateFromString("2016-03-01 17:00:00"),
+      let endTime: NSDate = dateFormatter.dateFromString("2016-03-02 03:00:00"),
+      let midnight: NSDate = dateFormatter.dateFromString("2016-03-02 00:00:00") {
+        
+        let correctPay: Double = 16 * 3 // $16/hr for 3hr
+        
+        XCTAssert(babySitter.calculatePayFromMidnightToEndOfJobTime(startTime, endTime: endTime, midnight: midnight) == correctPay, "BabySitter calculatePayFromMidnightToEndOfJobTime incorrect.")
+    }
+    
+    // startTime is earlier than midnight, endTime is later than endOfJobTime
+    if let startTime: NSDate = dateFormatter.dateFromString("2016-03-01 17:00:00"),
+      let endTime: NSDate = dateFormatter.dateFromString("2016-03-02 06:00:00"),
+      let midnight: NSDate = dateFormatter.dateFromString("2016-03-02 00:00:00") {
+        
+        let correctPay: Double = 16 * 4 // $16/hr for 4hr
+        
+        XCTAssert(babySitter.calculatePayFromMidnightToEndOfJobTime(startTime, endTime: endTime, midnight: midnight) == correctPay, "BabySitter calculatePayFromMidnightToEndOfJobTime incorrect.")
+    }
+    
+    // startTime is later than midnight, endTime is earlier than endOfJobTime
+    if let startTime: NSDate = dateFormatter.dateFromString("2016-03-02 01:00:00"),
+      let endTime: NSDate = dateFormatter.dateFromString("2016-03-02 03:00:00"),
+      let midnight: NSDate = dateFormatter.dateFromString("2016-03-02 00:00:00") {
+        
+        let correctPay: Double = 16 * 2 // $16/hr for 2hr
+        
+        XCTAssert(babySitter.calculatePayFromMidnightToEndOfJobTime(startTime, endTime: endTime, midnight: midnight) == correctPay, "BabySitter calculatePayFromMidnightToEndOfJobTime incorrect.")
+    }
+    
+    // startTime is later than midnight, endTime is later than endOfJobTime
+    if let startTime: NSDate = dateFormatter.dateFromString("2016-03-02 01:00:00"),
+      let endTime: NSDate = dateFormatter.dateFromString("2016-03-02 06:00:00"),
+      let midnight: NSDate = dateFormatter.dateFromString("2016-03-02 00:00:00") {
+        
+        let correctPay: Double = 16 * 3 // $16/hr for 2hr
+        
+        XCTAssert(babySitter.calculatePayFromMidnightToEndOfJobTime(startTime, endTime: endTime, midnight: midnight) == correctPay, "BabySitter calculatePayFromMidnightToEndOfJobTime incorrect.")
+    }
+    
+  }
+  
   // MARK: Lifecycle
   override func setUp() {
     super.setUp()
