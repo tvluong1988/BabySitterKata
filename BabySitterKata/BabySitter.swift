@@ -102,8 +102,6 @@ extension BabySitter {
       
       let pay = timeWorkedInHours * payRate
       
-      print("time sec: \(timeWorkedInSeconds), time hour: \(timeWorkedInHours), pay: \(pay)")
-      
       return pay
       
     case .OrderedAscending:   // endTime is earlier than bedTime
@@ -112,8 +110,6 @@ extension BabySitter {
       let timeWorkedInHours: Double = floor(timeWorkedInSeconds/secondsPerHour)
       
       let pay = timeWorkedInHours * payRate
-      
-      print("time sec: \(timeWorkedInSeconds), time hour: \(timeWorkedInHours), pay: \(pay)")
       
       return pay
       
@@ -124,14 +120,122 @@ extension BabySitter {
       
       let pay = timeWorkedInHours * payRate
       
-      print("time sec: \(timeWorkedInSeconds), time hour: \(timeWorkedInHours), pay: \(pay)")
-      
       return pay
     }
   }
   
-  func calculatePayFromBedTimeToMidnight(startTime: NSDate, endTime: NSDate, bedTime: NSDate) -> Double {
-    return 0
+  func calculatePayFromBedTimeToMidnight(startTime: NSDate, endTime: NSDate, bedTime: NSDate, midnight: NSDate) -> Double {
+    
+    // Case where startTime is pass midnight, therefore zero pay.
+    if case .OrderedDescending = startTime.compare(midnight) {
+      return 0
+    }
+    
+    
+    let secondsPerHour: Double = 3600
+    let payRate: Double = 8
+    
+    
+    let startTimeBedTimeCompare = startTime.compare(bedTime)
+    
+    switch startTimeBedTimeCompare {
+    case .OrderedSame: // startTime equals to bedTime
+      let endTimeMidnightCompare = endTime.compare(midnight)
+      
+      switch endTimeMidnightCompare {
+      case .OrderedSame:  // endTime equal to midnight
+        let timeWorkedInSeconds: NSTimeInterval = midnight.timeIntervalSinceDate(bedTime)
+        
+        let timeWorkedInHours: Double = floor(timeWorkedInSeconds/secondsPerHour)
+        
+        let pay = timeWorkedInHours * payRate
+        
+        return pay
+        
+      case .OrderedAscending:   // endTime earlier than midnight
+        let timeWorkedInSeconds: NSTimeInterval = endTime.timeIntervalSinceDate(bedTime)
+        
+        let timeWorkedInHours: Double = floor(timeWorkedInSeconds/secondsPerHour)
+        
+        let pay = timeWorkedInHours * payRate
+        
+        return pay
+        
+      case .OrderedDescending:  // endTime later than midnight
+        let timeWorkedInSeconds: NSTimeInterval = midnight.timeIntervalSinceDate(bedTime)
+        
+        let timeWorkedInHours: Double = floor(timeWorkedInSeconds/secondsPerHour)
+        
+        let pay = timeWorkedInHours * payRate
+        
+        return pay
+      }
+      
+    case .OrderedAscending: // startTime earlier than bedTime
+      let endTimeMidnightCompare = endTime.compare(midnight)
+      
+      switch endTimeMidnightCompare {
+      case .OrderedSame:  // endTime equal to midnight
+        let timeWorkedInSeconds: NSTimeInterval = midnight.timeIntervalSinceDate(bedTime)
+        
+        let timeWorkedInHours: Double = floor(timeWorkedInSeconds/secondsPerHour)
+        
+        let pay = timeWorkedInHours * payRate
+        
+        return pay
+        
+      case .OrderedAscending:   // endTime earlier than midnight
+        let timeWorkedInSeconds: NSTimeInterval = endTime.timeIntervalSinceDate(bedTime)
+        
+        let timeWorkedInHours: Double = floor(timeWorkedInSeconds/secondsPerHour)
+        
+        let pay = timeWorkedInHours * payRate
+        
+        return pay
+        
+      case .OrderedDescending:  // endTime later than midnight
+        let timeWorkedInSeconds: NSTimeInterval = midnight.timeIntervalSinceDate(bedTime)
+        
+        let timeWorkedInHours: Double = floor(timeWorkedInSeconds/secondsPerHour)
+        
+        let pay = timeWorkedInHours * payRate
+        
+        return pay
+      }
+      
+    case .OrderedDescending:  // startTime later than betTime
+      let endTimeMidnightCompare = endTime.compare(midnight)
+      
+      switch endTimeMidnightCompare {
+      case .OrderedSame:  // endTime equal to midnight
+        let timeWorkedInSeconds: NSTimeInterval = midnight.timeIntervalSinceDate(startTime)
+        
+        let timeWorkedInHours: Double = floor(timeWorkedInSeconds/secondsPerHour)
+        
+        let pay = timeWorkedInHours * payRate
+        
+        return pay
+        
+      case .OrderedAscending:   // endTime earlier than midnight
+        let timeWorkedInSeconds: NSTimeInterval = endTime.timeIntervalSinceDate(startTime)
+        
+        let timeWorkedInHours: Double = floor(timeWorkedInSeconds/secondsPerHour)
+        
+        let pay = timeWorkedInHours * payRate
+        
+        return pay
+        
+      case .OrderedDescending:  // endTime later than midnight
+        let timeWorkedInSeconds: NSTimeInterval = midnight.timeIntervalSinceDate(startTime)
+        
+        let timeWorkedInHours: Double = floor(timeWorkedInSeconds/secondsPerHour)
+        
+        let pay = timeWorkedInHours * payRate
+        
+        return pay
+      }
+    }
+    
   }
 }
 
