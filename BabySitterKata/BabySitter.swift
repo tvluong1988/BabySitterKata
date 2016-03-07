@@ -57,7 +57,30 @@ extension BabySitter {
   }
   
   func setEndTime(endTime: NSDate) -> Bool {
-    return false
+    let dateFormat = "HH:mm:ss"
+    let dateFormatter = NSDateFormatter()
+    dateFormatter.dateFormat = dateFormat
+    
+    guard let fourAMTimeLimit: NSDate = dateFormatter.dateFromString("04:00:00") else {
+      return false
+    }
+    
+    let compareResult = endTime.compare(fourAMTimeLimit)
+    
+    switch compareResult {
+    case .OrderedAscending:   // endTime is earlier than 4AM
+      self.endTime = endTime
+      return true
+      
+    case .OrderedDescending:  // endTime is later than 4AM
+      return false
+      
+    case .OrderedSame:        // endTime is equal to 4AM
+      self.endTime = endTime
+      return false
+    }
+    
+    
   }
 }
 
