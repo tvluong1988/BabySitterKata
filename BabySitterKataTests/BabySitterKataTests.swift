@@ -60,6 +60,42 @@ class BabySitterKataTests: XCTestCase {
     
   }
   
+  func testsBabySitterCalculatePayFromStartTimeToBedTime() {
+    let babySitter = BabySitter()
+    
+    let dateFormat = "HH:mm:ss"
+    let dateFormatter = NSDateFormatter()
+    dateFormatter.dateFormat = dateFormat
+    
+    if let startTime: NSDate = dateFormatter.dateFromString("17:00:00"),
+      let endTime: NSDate = dateFormatter.dateFromString("20:00:00"),
+      let bedTime: NSDate = dateFormatter.dateFromString("20:00:00") {
+        
+        let correctPay: Int = 12 * 3 // $12/hr for 3hr
+        
+        XCTAssert(babySitter.calculatePayFromStartTimeToBedTime(startTime, endTime: endTime, bedTime: bedTime) == correctPay, "BabySitter calculatePayFromStartTimeToBedTime incorrect.")
+    }
+    
+    if let startTime: NSDate = dateFormatter.dateFromString("17:00:00"),
+      let endTime: NSDate = dateFormatter.dateFromString("19:00:00"),
+      let bedTime: NSDate = dateFormatter.dateFromString("20:00:00") {
+        
+        let correctPay: Int = 12 * 2 // $12/hr for 2hr
+        
+        XCTAssert(babySitter.calculatePayFromStartTimeToBedTime(startTime, endTime: endTime, bedTime: bedTime) == correctPay, "BabySitter calculatePayFromStartTimeToBedTime incorrect.")
+    }
+    
+    if let startTime: NSDate = dateFormatter.dateFromString("17:00:00"),
+      let endTime: NSDate = dateFormatter.dateFromString("22:00:00"),
+      let bedTime: NSDate = dateFormatter.dateFromString("20:00:00") {
+        
+        let correctPay: Int = 12 * 3 // $12/hr for 3hr
+        
+        XCTAssert(babySitter.calculatePayFromStartTimeToBedTime(startTime, endTime: endTime, bedTime: bedTime) == correctPay, "BabySitter calculatePayFromStartTimeToBedTime incorrect.")
+    }
+    
+  }
+  
   // MARK: Lifecycle
   override func setUp() {
     super.setUp()

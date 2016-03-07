@@ -27,7 +27,7 @@ class BabySitter {
   var endTime: NSDate?
 }
 
-// MARK: - Helpers
+// MARK: - Work Time
 extension BabySitter {
   func setStartTime(startTime: NSDate) -> Bool {
     
@@ -80,11 +80,19 @@ extension BabySitter {
       return false
     }
     
-    
   }
 }
 
 
+// MARK: - Payment Functions
+extension BabySitter {
+  
+  func calculatePayFromStartTimeToBedTime(startTime: NSDate, endTime: NSDate, bedTime: NSDate) -> Int {
+    
+    return 0
+  }
+  
+}
 
 
 
