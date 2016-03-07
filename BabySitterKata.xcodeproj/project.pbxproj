@@ -13,6 +13,7 @@
 		8BCC3B651C8DD20B00249684 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8BCC3B641C8DD20B00249684 /* Assets.xcassets */; };
 		8BCC3B681C8DD20B00249684 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8BCC3B661C8DD20B00249684 /* LaunchScreen.storyboard */; };
 		8BCC3B731C8DD20B00249684 /* BabySitterKataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BCC3B721C8DD20B00249684 /* BabySitterKataTests.swift */; };
+		8BCC3B7F1C8DD27800249684 /* BabySitterKataRules in Resources */ = {isa = PBXBuildFile; fileRef = 8BCC3B7E1C8DD27800249684 /* BabySitterKataRules */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +37,7 @@
 		8BCC3B6E1C8DD20B00249684 /* BabySitterKataTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BabySitterKataTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BCC3B721C8DD20B00249684 /* BabySitterKataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BabySitterKataTests.swift; sourceTree = "<group>"; };
 		8BCC3B741C8DD20B00249684 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8BCC3B7E1C8DD27800249684 /* BabySitterKataRules */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = BabySitterKataRules; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,12 +79,8 @@
 		8BCC3B5C1C8DD20B00249684 /* BabySitterKata */ = {
 			isa = PBXGroup;
 			children = (
-				8BCC3B5D1C8DD20B00249684 /* AppDelegate.swift */,
-				8BCC3B5F1C8DD20B00249684 /* ViewController.swift */,
-				8BCC3B611C8DD20B00249684 /* Main.storyboard */,
-				8BCC3B641C8DD20B00249684 /* Assets.xcassets */,
-				8BCC3B661C8DD20B00249684 /* LaunchScreen.storyboard */,
-				8BCC3B691C8DD20B00249684 /* Info.plist */,
+				8BCC3B7D1C8DD21B00249684 /* Support */,
+				8BCC3B7E1C8DD27800249684 /* BabySitterKataRules */,
 			);
 			path = BabySitterKata;
 			sourceTree = "<group>";
@@ -94,6 +92,19 @@
 				8BCC3B741C8DD20B00249684 /* Info.plist */,
 			);
 			path = BabySitterKataTests;
+			sourceTree = "<group>";
+		};
+		8BCC3B7D1C8DD21B00249684 /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				8BCC3B5D1C8DD20B00249684 /* AppDelegate.swift */,
+				8BCC3B5F1C8DD20B00249684 /* ViewController.swift */,
+				8BCC3B611C8DD20B00249684 /* Main.storyboard */,
+				8BCC3B641C8DD20B00249684 /* Assets.xcassets */,
+				8BCC3B661C8DD20B00249684 /* LaunchScreen.storyboard */,
+				8BCC3B691C8DD20B00249684 /* Info.plist */,
+			);
+			name = Support;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -177,6 +188,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8BCC3B7F1C8DD27800249684 /* BabySitterKataRules in Resources */,
 				8BCC3B681C8DD20B00249684 /* LaunchScreen.storyboard in Resources */,
 				8BCC3B651C8DD20B00249684 /* Assets.xcassets in Resources */,
 				8BCC3B631C8DD20B00249684 /* Main.storyboard in Resources */,
