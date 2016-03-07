@@ -17,6 +17,24 @@ class BabySitterKataTests: XCTestCase {
     babySitter = nil
   }
   
+  func testsBabySitterStartsNoEarlierThan5PM() {
+    
+    let babySitter = BabySitter()
+    
+    let dateFormat = "HH:mm:ss"
+    let dateFormatter = NSDateFormatter()
+    dateFormatter.dateFormat = dateFormat
+    
+    if let startTime: NSDate = dateFormatter.dateFromString("01:00:22") {
+      XCTAssert(babySitter.setStartTime(startTime), "BabySitter started earlier than 5PM.")
+    }
+    
+    if let startTime: NSDate = dateFormatter.dateFromString("05:00:22") {
+      XCTAssert(babySitter.setStartTime(startTime), "BabySitter started earlier than 5PM.")
+    }
+    
+  }
+  
   // MARK: Lifecycle
   override func setUp() {
     super.setUp()

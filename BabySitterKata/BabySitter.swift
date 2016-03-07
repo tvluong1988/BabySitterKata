@@ -13,9 +13,20 @@ class BabySitter {
   // MARK: Lifecycle
   init() {
     print("init babysitter...")
+    
+    self.startTime = nil
   }
   
   deinit {
     print("deinit babysitter...")
+  }
+  
+  // MARK: Properties
+  let startTime: NSDate?
+}
+
+extension BabySitter {
+  func setStartTime(time: NSDate) -> Bool {
+    return false
   }
 }
