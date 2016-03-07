@@ -89,6 +89,10 @@ extension BabySitter {
   
   func calculatePayFromStartTimeToBedTime(startTime: NSDate, endTime: NSDate, bedTime: NSDate) -> Double {
     
+    if case .OrderedDescending = startTime.compare(bedTime) {
+      return 0
+    }
+    
     let secondsPerHour: Double = 3600
     let payRate: Double = 12
     
