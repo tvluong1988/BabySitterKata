@@ -129,6 +129,10 @@ extension BabySitter {
       return pay
     }
   }
+  
+  func calculatePayFromBedTimeToMidnight(startTime: NSDate, endTime: NSDate, bedTime: NSDate) -> Double {
+    return 0
+  }
 }
 
 
