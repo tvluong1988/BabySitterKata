@@ -87,11 +87,48 @@ extension BabySitter {
 // MARK: - Payment Functions
 extension BabySitter {
   
-  func calculatePayFromStartTimeToBedTime(startTime: NSDate, endTime: NSDate, bedTime: NSDate) -> Int {
+  func calculatePayFromStartTimeToBedTime(startTime: NSDate, endTime: NSDate, bedTime: NSDate) -> Double {
+    let secondsPerHour: Double = 3600
+    let payRate: Double = 12
     
-    return 0
+    
+    let compareResult = endTime.compare(bedTime)
+    
+    switch compareResult {
+    case .OrderedSame:        // endTime is equal to bedTime
+      let timeWorkedInSeconds: NSTimeInterval = bedTime.timeIntervalSinceDate(startTime)
+      
+      let timeWorkedInHours: Double = floor(timeWorkedInSeconds/secondsPerHour)
+      
+      let pay = timeWorkedInHours * payRate
+      
+      print("time sec: \(timeWorkedInSeconds), time hour: \(timeWorkedInHours), pay: \(pay)")
+      
+      return pay
+      
+    case .OrderedAscending:   // endTime is earlier than bedTime
+      let timeWorkedInSeconds: NSTimeInterval = endTime.timeIntervalSinceDate(startTime)
+      
+      let timeWorkedInHours: Double = floor(timeWorkedInSeconds/secondsPerHour)
+      
+      let pay = timeWorkedInHours * payRate
+      
+      print("time sec: \(timeWorkedInSeconds), time hour: \(timeWorkedInHours), pay: \(pay)")
+      
+      return pay
+      
+    case .OrderedDescending:  // endTime is later than bedTime
+      let timeWorkedInSeconds: NSTimeInterval = bedTime.timeIntervalSinceDate(startTime)
+      
+      let timeWorkedInHours: Double = floor(timeWorkedInSeconds/secondsPerHour)
+      
+      let pay = timeWorkedInHours * payRate
+      
+      print("time sec: \(timeWorkedInSeconds), time hour: \(timeWorkedInHours), pay: \(pay)")
+      
+      return pay
+    }
   }
-  
 }
 
 
