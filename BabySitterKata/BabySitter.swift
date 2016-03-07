@@ -15,6 +15,7 @@ class BabySitter {
     print("init babysitter...")
     
     self.startTime = nil
+    self.endTime = nil
   }
   
   deinit {
@@ -23,6 +24,7 @@ class BabySitter {
   
   // MARK: Properties
   var startTime: NSDate?
+  var endTime: NSDate?
 }
 
 // MARK: - Helpers
@@ -33,7 +35,7 @@ extension BabySitter {
     let dateFormatter = NSDateFormatter()
     dateFormatter.dateFormat = dateFormat
     
-    guard let fivePMStartTimeLimit: NSDate = dateFormatter.dateFromString("05:00:00") else {
+    guard let fivePMStartTimeLimit: NSDate = dateFormatter.dateFromString("17:00:00") else {
       return false
     }
     
@@ -52,6 +54,10 @@ extension BabySitter {
       return true
     }
     
+  }
+  
+  func setEndTime(endTime: NSDate) -> Bool {
+    return false
   }
 }
 
