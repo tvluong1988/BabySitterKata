@@ -73,6 +73,16 @@ class BabySitterKataTests: XCTestCase {
     let dateFormatter = NSDateFormatter()
     dateFormatter.dateFormat = dateFormat
     
+    // startTime earlier than 5PM
+    if let startTime: NSDate = dateFormatter.dateFromString("14:00:00"),
+      let endTime: NSDate = dateFormatter.dateFromString("20:00:00"),
+      let bedTime: NSDate = dateFormatter.dateFromString("20:00:00") {
+        
+        let correctPay: Double = 12 * 3 // $12/hr for 3hr
+        
+        XCTAssert(babySitter.calculatePayFromStartTimeToBedTime(startTime, endTime: endTime, bedTime: bedTime) == correctPay, "BabySitter calculatePayFromStartTimeToBedTime incorrect.")
+    }
+    
     // endTime equals bedTime
     if let startTime: NSDate = dateFormatter.dateFromString("17:00:00"),
       let endTime: NSDate = dateFormatter.dateFromString("20:00:00"),
@@ -239,6 +249,41 @@ class BabySitterKataTests: XCTestCase {
     
   }
   
+  func testsFullHours() {
+    let babySitter = BabySitter()
+    
+    let dateFormat = "yyyy-mm-dd HH:mm:ss"
+    let dateFormatter = NSDateFormatter()
+    dateFormatter.dateFormat = dateFormat
+    
+    let bedTime: NSDate = dateFormatter.dateFromString("2016-03-01 20:00:00")!
+    let midnight: NSDate = dateFormatter.dateFromString("2016-03-02 00:00:00")!
+    
+    let preBedTimePay: Double = 12
+    let postBedTimePay: Double = 8
+    let postMidnightPay: Double = 16
+    
+    // startTime is earlier than 5PM, endTime is later than 4AM
+    if let startTime: NSDate = dateFormatter.dateFromString("2016-03-01 15:33:44"),
+      let endTime: NSDate = dateFormatter.dateFromString("2016-03-02 08:35:45")
+    {
+      
+      let correctPay: Double = preBedTimePay * 3 + postBedTimePay * 4 + postMidnightPay * 4
+      
+      let calculatedPreBedTimePay = babySitter.calculatePayFromStartTimeToBedTime(startTime, endTime: endTime, bedTime: bedTime)
+      let calculatedPostBedTimePay = babySitter.calculatePayFromBedTimeToMidnight(startTime, endTime: endTime, bedTime: bedTime, midnight: midnight)
+      let calculatedPostMidnightPay = babySitter.calculatePayFromMidnightToEndOfJobTime(startTime, endTime: endTime, midnight: midnight)
+      
+      let totalCalculatedPay = calculatedPreBedTimePay + calculatedPostBedTimePay + calculatedPostMidnightPay
+      
+      print("Correct pay: \(correctPay)")
+      print("\(calculatedPreBedTimePay), \(calculatedPostBedTimePay), \(calculatedPostMidnightPay), \(totalCalculatedPay)")
+      
+      XCTAssert(totalCalculatedPay == correctPay, "Total calculated pay is incorrect.")
+    }
+    
+  }
+  
   // MARK: Lifecycle
   override func setUp() {
     super.setUp()
@@ -250,3 +295,29 @@ class BabySitterKataTests: XCTestCase {
   
   // MARK: Properties
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
