@@ -239,7 +239,123 @@ extension BabySitter {
   }
   
   func calculatePayFromMidnightToEndOfJobTime(startTime: NSDate, endTime: NSDate, midnight: NSDate) -> Double {
-    return 0
+    
+    // Case of endTime earlier than midnight, return zero pay
+    if case .OrderedAscending = endTime.compare(midnight) {
+      return 0
+    }
+    
+    let secondsPerHour: Double = 3600
+    let payRate: Double = 16
+    
+    let dateFormat = "yyyy-mm-dd HH:mm:ss"
+    let dateFormatter = NSDateFormatter()
+    dateFormatter.dateFormat = dateFormat
+    
+    let fourAMTimeLimit: NSDate = dateFormatter.dateFromString("2016-03-02 04:00:00")!
+    
+    
+    let startTimeMidnightCompare = startTime.compare(midnight)
+    
+    switch startTimeMidnightCompare {
+    case .OrderedSame:  // startTime equal to midnight
+      
+      let endTimeFourAMTimeLimitCompare = endTime.compare(fourAMTimeLimit)
+      
+      switch endTimeFourAMTimeLimitCompare {
+      case .OrderedSame: // endTime equal to 4AM
+        let timeWorkedInSeconds: NSTimeInterval = fourAMTimeLimit.timeIntervalSinceDate(midnight)
+        
+        let timeWorkedInHours: Double = floor(timeWorkedInSeconds/secondsPerHour)
+        
+        let pay = timeWorkedInHours * payRate
+        
+        return pay
+        
+      case .OrderedAscending:   // endTime earlier than 4AM
+        let timeWorkedInSeconds: NSTimeInterval = endTime.timeIntervalSinceDate(midnight)
+        
+        let timeWorkedInHours: Double = floor(timeWorkedInSeconds/secondsPerHour)
+        
+        let pay = timeWorkedInHours * payRate
+        
+        return pay
+        
+      case .OrderedDescending:  // endTime later than 4AM
+        let timeWorkedInSeconds: NSTimeInterval = fourAMTimeLimit.timeIntervalSinceDate(midnight)
+        
+        let timeWorkedInHours: Double = floor(timeWorkedInSeconds/secondsPerHour)
+        
+        let pay = timeWorkedInHours * payRate
+        
+        return pay
+      }
+      
+    case .OrderedAscending:   // startTime earlier than midnight
+      let endTimeFourAMTimeLimitCompare = endTime.compare(fourAMTimeLimit)
+      
+      switch endTimeFourAMTimeLimitCompare {
+      case .OrderedSame: // endTime equal to 4AM
+        let timeWorkedInSeconds: NSTimeInterval = fourAMTimeLimit.timeIntervalSinceDate(midnight)
+        
+        let timeWorkedInHours: Double = floor(timeWorkedInSeconds/secondsPerHour)
+        
+        let pay = timeWorkedInHours * payRate
+        
+        return pay
+        
+      case .OrderedAscending:   // endTime earlier than 4AM
+        let timeWorkedInSeconds: NSTimeInterval = endTime.timeIntervalSinceDate(midnight)
+        
+        let timeWorkedInHours: Double = floor(timeWorkedInSeconds/secondsPerHour)
+        
+        let pay = timeWorkedInHours * payRate
+        
+        return pay
+        
+      case .OrderedDescending:  // endTime later than 4AM
+        let timeWorkedInSeconds: NSTimeInterval = fourAMTimeLimit.timeIntervalSinceDate(midnight)
+        
+        let timeWorkedInHours: Double = floor(timeWorkedInSeconds/secondsPerHour)
+        
+        let pay = timeWorkedInHours * payRate
+        
+        return pay
+      }
+      
+    case .OrderedDescending:  // startTime later than midnight
+      let endTimeFourAMTimeLimitCompare = endTime.compare(fourAMTimeLimit)
+      
+      switch endTimeFourAMTimeLimitCompare {
+      case .OrderedSame: // endTime equal to 4AM
+        let timeWorkedInSeconds: NSTimeInterval = fourAMTimeLimit.timeIntervalSinceDate(startTime)
+        
+        let timeWorkedInHours: Double = floor(timeWorkedInSeconds/secondsPerHour)
+        
+        let pay = timeWorkedInHours * payRate
+        
+        return pay
+        
+      case .OrderedAscending:   // endTime earlier than 4AM
+        let timeWorkedInSeconds: NSTimeInterval = endTime.timeIntervalSinceDate(startTime)
+        
+        let timeWorkedInHours: Double = floor(timeWorkedInSeconds/secondsPerHour)
+        
+        let pay = timeWorkedInHours * payRate
+        
+        return pay
+        
+      case .OrderedDescending:  // endTime later than 4AM
+        let timeWorkedInSeconds: NSTimeInterval = fourAMTimeLimit.timeIntervalSinceDate(startTime)
+        
+        let timeWorkedInHours: Double = floor(timeWorkedInSeconds/secondsPerHour)
+        
+        let pay = timeWorkedInHours * payRate
+        
+        return pay
+      }
+    }
+    
   }
 }
 
