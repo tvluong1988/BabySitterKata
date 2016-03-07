@@ -83,6 +83,16 @@ class BabySitterKataTests: XCTestCase {
         XCTAssert(babySitter.calculatePayFromStartTimeToBedTime(startTime, endTime: endTime, bedTime: bedTime) == correctPay, "BabySitter calculatePayFromStartTimeToBedTime incorrect.")
     }
     
+    // startTime later than bedTime
+    if let startTime: NSDate = dateFormatter.dateFromString("2016-03-01 21:00:00"),
+      let endTime: NSDate = dateFormatter.dateFromString("2016-03-01 23:00:00"),
+      let bedTime: NSDate = dateFormatter.dateFromString("2016-03-01 20:00:00") {
+        
+        let correctPay: Double = 12 * 0 // $12/hr for 3hr
+        
+        XCTAssert(babySitter.calculatePayFromStartTimeToBedTime(startTime, endTime: endTime, bedTime: bedTime) == correctPay, "BabySitter calculatePayFromStartTimeToBedTime incorrect.")
+    }
+    
     // endTime equals bedTime
     if let startTime: NSDate = dateFormatter.dateFromString("2016-03-01 17:00:00"),
       let endTime: NSDate = dateFormatter.dateFromString("2016-03-01 20:00:00"),
