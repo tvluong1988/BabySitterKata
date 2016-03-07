@@ -249,7 +249,96 @@ class BabySitterKataTests: XCTestCase {
     
   }
   
-  func testsFullHours() {
+  func testsBabySitterCalculatePayFromStartTimeToBedTimeFractionalHours() {
+    let babySitter = BabySitter()
+    
+    let dateFormat = "yyyy-mm-dd HH:mm:ss"
+    let dateFormatter = NSDateFormatter()
+    dateFormatter.dateFormat = dateFormat
+    
+    // Worked 2 hours
+    if let startTime: NSDate = dateFormatter.dateFromString("2016-03-01 17:30:00"),
+      let endTime: NSDate = dateFormatter.dateFromString("2016-03-01 19:30:00"),
+      let bedTime: NSDate = dateFormatter.dateFromString("2016-03-01 20:00:00") {
+        
+        let correctPay: Double = 12 * 2 // $12/hr for 3hr
+        
+        XCTAssert(babySitter.calculatePayFromStartTimeToBedTime(startTime, endTime: endTime, bedTime: bedTime) == correctPay, "BabySitter calculatePayFromStartTimeToBedTime incorrect.")
+    }
+    
+    // Worked 2.5 hours
+    if let startTime: NSDate = dateFormatter.dateFromString("2016-03-01 17:30:00"),
+      let endTime: NSDate = dateFormatter.dateFromString("2016-03-01 20:00:00"),
+      let bedTime: NSDate = dateFormatter.dateFromString("2016-03-01 20:00:00") {
+        
+        let correctPay: Double = 12 * 2 // $12/hr for 3hr
+        
+        XCTAssert(babySitter.calculatePayFromStartTimeToBedTime(startTime, endTime: endTime, bedTime: bedTime) == correctPay, "BabySitter calculatePayFromStartTimeToBedTime incorrect.")
+    }
+    
+  }
+  
+  func testsBabySitterCalculatePayFromBedTimeToMidnightFractionalHours() {
+    let babySitter = BabySitter()
+    
+    let dateFormat = "yyyy-mm-dd HH:mm:ss"
+    let dateFormatter = NSDateFormatter()
+    dateFormatter.dateFormat = dateFormat
+    
+    // Worked 2 hours
+    if let startTime: NSDate = dateFormatter.dateFromString("2016-03-01 17:00:00"),
+      let endTime: NSDate = dateFormatter.dateFromString("2016-03-01 22:00:00"),
+      let bedTime: NSDate = dateFormatter.dateFromString("2016-03-01 20:00:00"),
+      let midnight: NSDate = dateFormatter.dateFromString("2016-03-02 00:00:00") {
+        
+        let correctPay: Double = 8 * 2 // $12/hr for 0hr
+        
+        XCTAssert(babySitter.calculatePayFromBedTimeToMidnight(startTime, endTime: endTime, bedTime: bedTime, midnight: midnight) == correctPay, "BabySitter calculatePayFromBedTimeToMidnight incorrect.")
+    }
+    
+    // Worked 2.5 hours
+    if let startTime: NSDate = dateFormatter.dateFromString("2016-03-01 21:00:00"),
+      let endTime: NSDate = dateFormatter.dateFromString("2016-03-01 23:30:00"),
+      let bedTime: NSDate = dateFormatter.dateFromString("2016-03-01 20:00:00"),
+      let midnight: NSDate = dateFormatter.dateFromString("2016-03-02 00:00:00") {
+        
+        let correctPay: Double = 8 * 2 // $12/hr for 0hr
+        
+        XCTAssert(babySitter.calculatePayFromBedTimeToMidnight(startTime, endTime: endTime, bedTime: bedTime, midnight: midnight) == correctPay, "BabySitter calculatePayFromBedTimeToMidnight incorrect.")
+    }
+    
+  }
+  
+  func testsBabySitterCalculatePayFromMidnightToEndOfJobTimeFractionalHours() {
+    let babySitter = BabySitter()
+    
+    let dateFormat = "yyyy-mm-dd HH:mm:ss"
+    let dateFormatter = NSDateFormatter()
+    dateFormatter.dateFormat = dateFormat
+    
+    // Worked 2 hours
+    if let startTime: NSDate = dateFormatter.dateFromString("2016-03-02 01:15:00"),
+      let endTime: NSDate = dateFormatter.dateFromString("2016-03-02 03:15:00"),
+      let midnight: NSDate = dateFormatter.dateFromString("2016-03-02 00:00:00") {
+        
+        let correctPay: Double = 16 * 2 // $16/hr for 0hr
+        
+        XCTAssert(babySitter.calculatePayFromMidnightToEndOfJobTime(startTime, endTime: endTime, midnight: midnight) == correctPay, "BabySitter calculatePayFromMidnightToEndOfJobTime incorrect.")
+    }
+    
+    // Worked 2.5 hours
+    if let startTime: NSDate = dateFormatter.dateFromString("2016-03-02 01:15:00"),
+      let endTime: NSDate = dateFormatter.dateFromString("2016-03-02 03:45:00"),
+      let midnight: NSDate = dateFormatter.dateFromString("2016-03-02 00:00:00") {
+        
+        let correctPay: Double = 16 * 2 // $16/hr for 0hr
+        
+        XCTAssert(babySitter.calculatePayFromMidnightToEndOfJobTime(startTime, endTime: endTime, midnight: midnight) == correctPay, "BabySitter calculatePayFromMidnightToEndOfJobTime incorrect.")
+    }
+    
+  }
+  
+  func testsBabySitterSchedules() {
     let babySitter = BabySitter()
     
     let dateFormat = "yyyy-mm-dd HH:mm:ss"
@@ -269,6 +358,25 @@ class BabySitterKataTests: XCTestCase {
     {
       
       let correctPay: Double = preBedTimePay * 3 + postBedTimePay * 4 + postMidnightPay * 4
+      
+      let calculatedPreBedTimePay = babySitter.calculatePayFromStartTimeToBedTime(startTime, endTime: endTime, bedTime: bedTime)
+      let calculatedPostBedTimePay = babySitter.calculatePayFromBedTimeToMidnight(startTime, endTime: endTime, bedTime: bedTime, midnight: midnight)
+      let calculatedPostMidnightPay = babySitter.calculatePayFromMidnightToEndOfJobTime(startTime, endTime: endTime, midnight: midnight)
+      
+      let totalCalculatedPay = calculatedPreBedTimePay + calculatedPostBedTimePay + calculatedPostMidnightPay
+      
+      print("Correct pay: \(correctPay)")
+      print("\(calculatedPreBedTimePay), \(calculatedPostBedTimePay), \(calculatedPostMidnightPay), \(totalCalculatedPay)")
+      
+      XCTAssert(totalCalculatedPay == correctPay, "Total calculated pay is incorrect.")
+    }
+    
+    // startTime is later than 5PM but earlier than bedTime, endTime is later than 4AM
+    if let startTime: NSDate = dateFormatter.dateFromString("2016-03-01 18:33:44"),
+      let endTime: NSDate = dateFormatter.dateFromString("2016-03-02 08:35:45")
+    {
+      
+      let correctPay: Double = preBedTimePay * 1 + postBedTimePay * 4 + postMidnightPay * 4
       
       let calculatedPreBedTimePay = babySitter.calculatePayFromStartTimeToBedTime(startTime, endTime: endTime, bedTime: bedTime)
       let calculatedPostBedTimePay = babySitter.calculatePayFromBedTimeToMidnight(startTime, endTime: endTime, bedTime: bedTime, midnight: midnight)
