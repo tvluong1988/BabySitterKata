@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8B60E9A31C8F2F3A00E032FE /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 8B60E9A21C8F2F3A00E032FE /* README.md */; };
+		8B60E9A51C8F2F6E00E032FE /* testResults.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B60E9A41C8F2F6E00E032FE /* testResults.png */; };
 		8BCC3B5E1C8DD20B00249684 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BCC3B5D1C8DD20B00249684 /* AppDelegate.swift */; };
 		8BCC3B601C8DD20B00249684 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BCC3B5F1C8DD20B00249684 /* ViewController.swift */; };
 		8BCC3B631C8DD20B00249684 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8BCC3B611C8DD20B00249684 /* Main.storyboard */; };
@@ -28,6 +30,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8B60E9A21C8F2F3A00E032FE /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		8B60E9A41C8F2F6E00E032FE /* testResults.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = testResults.png; sourceTree = "<group>"; };
 		8BCC3B5A1C8DD20B00249684 /* BabySitterKata.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BabySitterKata.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BCC3B5D1C8DD20B00249684 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8BCC3B5F1C8DD20B00249684 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -63,6 +67,8 @@
 		8BCC3B511C8DD20B00249684 = {
 			isa = PBXGroup;
 			children = (
+				8B60E9A41C8F2F6E00E032FE /* testResults.png */,
+				8B60E9A21C8F2F3A00E032FE /* README.md */,
 				8BCC3B5C1C8DD20B00249684 /* BabySitterKata */,
 				8BCC3B711C8DD20B00249684 /* BabySitterKataTests */,
 				8BCC3B5B1C8DD20B00249684 /* Products */,
@@ -192,6 +198,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8BCC3B7F1C8DD27800249684 /* BabySitterKataRules in Resources */,
+				8B60E9A51C8F2F6E00E032FE /* testResults.png in Resources */,
 				8BCC3B681C8DD20B00249684 /* LaunchScreen.storyboard in Resources */,
 				8BCC3B651C8DD20B00249684 /* Assets.xcassets in Resources */,
 				8BCC3B631C8DD20B00249684 /* Main.storyboard in Resources */,
@@ -214,6 +221,7 @@
 			files = (
 				8BCC3B811C8DD9DF00249684 /* BabySitter.swift in Sources */,
 				8BCC3B601C8DD20B00249684 /* ViewController.swift in Sources */,
+				8B60E9A31C8F2F3A00E032FE /* README.md in Sources */,
 				8BCC3B5E1C8DD20B00249684 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -404,6 +412,7 @@
 				8BCC3B791C8DD20B00249684 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		8BCC3B7A1C8DD20B00249684 /* Build configuration list for PBXNativeTarget "BabySitterKataTests" */ = {
 			isa = XCConfigurationList;
@@ -412,6 +421,7 @@
 				8BCC3B7C1C8DD20B00249684 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
