@@ -1,8 +1,6 @@
-<h3 align="center">
-<img src="testResults.png" alt="test results" />
-</h3>
 
 Babysitter Kata
+===============
 
 Background
 ----------
@@ -21,3 +19,8 @@ Feature:
 As a babysitter
 In order to get paid for 1 night of work
 I want to calculate my nightly charge
+
+# Test results
+<h3 align="left">
+<img src="testResults.png" alt="test results" />
+</h3>
