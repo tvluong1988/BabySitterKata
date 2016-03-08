@@ -416,19 +416,13 @@ class BabySitterKataTests: XCTestCase {
     
   }
   
-  func testsBabySitterSchedules() {
-    let babySitter = BabySitter()
-    
-    let dateFormat = "yyyy-mm-dd HH:mm:ss"
-    let dateFormatter = NSDateFormatter()
-    dateFormatter.dateFormat = dateFormat
+  func testsBabySitterTotalPay() {
     
     let bedTime: NSDate = dateFormatter.dateFromString("2016-03-01 20:00:00")!
-    let midnight: NSDate = dateFormatter.dateFromString("2016-03-02 00:00:00")!
     
-    let preBedTimePay: Double = 12
-    let postBedTimePay: Double = 8
-    let postMidnightPay: Double = 16
+    let preBedTimePay = babySitter.fivePMToBedTimePayRate
+    let postBedTimePay = babySitter.bedTimeToMidnightPayRate
+    let postMidnightPay = babySitter.midnightTo4AMPayRate
     
     // startTime is earlier than 5PM, endTime is later than 4AM
     if let startTime: NSDate = dateFormatter.dateFromString("2016-03-01 15:00:00"),
@@ -442,9 +436,6 @@ class BabySitterKataTests: XCTestCase {
       let calculatedPostMidnightPay = babySitter.calculatePayFromMidnightToEndOfJobTime(startTime, endTime: endTime)
       
       let totalCalculatedPay = calculatedPreBedTimePay + calculatedPostBedTimePay + calculatedPostMidnightPay
-      
-      print("Correct pay: \(correctPay)")
-      print("\(calculatedPreBedTimePay), \(calculatedPostBedTimePay), \(calculatedPostMidnightPay), \(totalCalculatedPay)")
       
       XCTAssert(totalCalculatedPay == correctPay, "Total calculated pay is incorrect.")
     }
@@ -462,9 +453,6 @@ class BabySitterKataTests: XCTestCase {
       
       let totalCalculatedPay = calculatedPreBedTimePay + calculatedPostBedTimePay + calculatedPostMidnightPay
       
-      print("Correct pay: \(correctPay)")
-      print("\(calculatedPreBedTimePay), \(calculatedPostBedTimePay), \(calculatedPostMidnightPay), \(totalCalculatedPay)")
-      
       XCTAssert(totalCalculatedPay == correctPay, "Total calculated pay is incorrect.")
     }
     
@@ -480,9 +468,6 @@ class BabySitterKataTests: XCTestCase {
       let calculatedPostMidnightPay = babySitter.calculatePayFromMidnightToEndOfJobTime(startTime, endTime: endTime)
       
       let totalCalculatedPay = calculatedPreBedTimePay + calculatedPostBedTimePay + calculatedPostMidnightPay
-      
-      print("Correct pay: \(correctPay)")
-      print("\(calculatedPreBedTimePay), \(calculatedPostBedTimePay), \(calculatedPostMidnightPay), \(totalCalculatedPay)")
       
       XCTAssert(totalCalculatedPay == correctPay, "Total calculated pay is incorrect.")
     }
@@ -500,9 +485,6 @@ class BabySitterKataTests: XCTestCase {
       
       let totalCalculatedPay = calculatedPreBedTimePay + calculatedPostBedTimePay + calculatedPostMidnightPay
       
-      print("Correct pay: \(correctPay)")
-      print("\(calculatedPreBedTimePay), \(calculatedPostBedTimePay), \(calculatedPostMidnightPay), \(totalCalculatedPay)")
-      
       XCTAssert(totalCalculatedPay == correctPay, "Total calculated pay is incorrect.")
     }
     
@@ -518,9 +500,6 @@ class BabySitterKataTests: XCTestCase {
       let calculatedPostMidnightPay = babySitter.calculatePayFromMidnightToEndOfJobTime(startTime, endTime: endTime)
       
       let totalCalculatedPay = calculatedPreBedTimePay + calculatedPostBedTimePay + calculatedPostMidnightPay
-      
-      print("Correct pay: \(correctPay)")
-      print("\(calculatedPreBedTimePay), \(calculatedPostBedTimePay), \(calculatedPostMidnightPay), \(totalCalculatedPay)")
       
       XCTAssert(totalCalculatedPay == correctPay, "Total calculated pay is incorrect.")
     }
@@ -538,10 +517,10 @@ class BabySitterKataTests: XCTestCase {
   }
   
   override func tearDown() {
-    //    dateFormatter = nil
-    //    amDate = nil
-    //    pmDate = nil
-    //    babySitter = nil
+    dateFormatter = nil
+    amDate = nil
+    pmDate = nil
+    babySitter = nil
     
     super.tearDown()
   }
