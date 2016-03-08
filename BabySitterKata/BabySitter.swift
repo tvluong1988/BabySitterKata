@@ -19,8 +19,6 @@ class BabySitter {
     dateFormatter = NSDateFormatter()
     dateFormatter.dateFormat = dateFormat
     
-    fivePMStartTimeLimit = dateFormatter.dateFromString(pmDate + "17:00:00")
-    fourAMEndTimeLimit = dateFormatter.dateFromString(amDate + "04:00:00")
   }
   
   deinit {
@@ -31,12 +29,25 @@ class BabySitter {
   var startTime: NSDate?
   var endTime: NSDate?
   let dateFormat = "yyyy-mm-dd HH:mm:ss"
-  let dateFormatter: NSDateFormatter!
+  var dateFormatter: NSDateFormatter!
   
-  let fivePMStartTimeLimit: NSDate!
-  let fourAMEndTimeLimit: NSDate!
+  var fivePMStartTimeLimit: NSDate {
+    return dateFormatter.dateFromString("2016-03-01 17:00:00")!
+  }
+  
+  var fourAMEndTimeLimit: NSDate {
+    return dateFormatter.dateFromString("2016-03-02 04:00:00")!
+  }
+  
   let pmDate = "2016-03-01"
   let amDate = "2016-03-02"
+  
+  let fivePMToBedTimePayRate: Double = 12
+  let bedTimeToMidnightPayRate: Double = 8
+  let midnightTo4AMPayRate: Double = 16
+  
+  let secondsPerHour: Double = 3600
+  
 }
 
 // MARK: - Work Time Validation
@@ -76,121 +87,47 @@ extension BabySitter {
   
   func calculatePayFromStartTimeToBedTime(startTime: NSDate, endTime: NSDate, bedTime: NSDate) -> Double {
     
+    // Case startTime is later than bedTime, return zero pay
     if case .OrderedDescending = startTime.compare(bedTime) {
       return 0
     }
     
-    let secondsPerHour: Double = 3600
-    let payRate: Double = 12
-    
-    let dateFormat = "yyyy-mm-dd HH:mm:ss"
-    let dateFormatter = NSDateFormatter()
-    dateFormatter.dateFormat = dateFormat
-    
-    guard let fivePMStartTimeLimit: NSDate = dateFormatter.dateFromString("2016-03-01 17:00:00") else {
+    // Case endTime is earlier than 5PM, return zero pay
+    if case .OrderedAscending = endTime.compare(fivePMStartTimeLimit) {
       return 0
     }
     
-    let startTimeFivePMStartTimeLimit = startTime.compare(fivePMStartTimeLimit)
+    let payRate = fivePMToBedTimePayRate
+    let timeWorkedInSeconds: NSTimeInterval
     
-    switch startTimeFivePMStartTimeLimit {
-    case .OrderedSame:  // startTime is equal to 5PM
+    let startTimeFivePMStartTimeLimit = startTime.compare(fivePMStartTimeLimit)
+    let endTimeBedTimeCompareResult = endTime.compare(bedTime)
+    
+    switch (startTimeFivePMStartTimeLimit, endTimeBedTimeCompareResult) {
+    case (.OrderedSame, .OrderedSame), (.OrderedSame, .OrderedDescending): // startTime equals 5PM, endTime equals or later than bedTime
+      timeWorkedInSeconds = bedTime.timeIntervalSinceDate(fivePMStartTimeLimit)
       
-      let endTimeBedTimeCompareResult = endTime.compare(bedTime)
+    case (.OrderedSame, .OrderedAscending): // startTime equals 5PM, endTime earlier than bedTime
+      timeWorkedInSeconds = endTime.timeIntervalSinceDate(fivePMStartTimeLimit)
       
-      switch endTimeBedTimeCompareResult {
-      case .OrderedSame:        // endTime is equal to bedTime
-        let timeWorkedInSeconds: NSTimeInterval = bedTime.timeIntervalSinceDate(fivePMStartTimeLimit)
-        
-        let timeWorkedInHours: Double = floor(timeWorkedInSeconds/secondsPerHour)
-        
-        let pay = timeWorkedInHours * payRate
-        
-        return pay
-        
-      case .OrderedAscending:   // endTime is earlier than bedTime
-        let timeWorkedInSeconds: NSTimeInterval = endTime.timeIntervalSinceDate(fivePMStartTimeLimit)
-        
-        let timeWorkedInHours: Double = floor(timeWorkedInSeconds/secondsPerHour)
-        
-        let pay = timeWorkedInHours * payRate
-        
-        return pay
-        
-      case .OrderedDescending:  // endTime is later than bedTime
-        let timeWorkedInSeconds: NSTimeInterval = bedTime.timeIntervalSinceDate(fivePMStartTimeLimit)
-        
-        let timeWorkedInHours: Double = floor(timeWorkedInSeconds/secondsPerHour)
-        
-        let pay = timeWorkedInHours * payRate
-        
-        return pay
-      }
+    case (.OrderedAscending, .OrderedSame), (.OrderedAscending, .OrderedDescending): // startTime earlier than 5PM, endTime equals or later than bedTime
+      timeWorkedInSeconds = bedTime.timeIntervalSinceDate(fivePMStartTimeLimit)
       
-    case .OrderedAscending:   // startTime is earlier than 5PM
-      let endTimeBedTimeCompareResult = endTime.compare(bedTime)
+    case (.OrderedAscending, .OrderedAscending): // startTime earlier than 5PM, endTime earlier than bedTime
+      timeWorkedInSeconds = endTime.timeIntervalSinceDate(fivePMStartTimeLimit)
       
-      switch endTimeBedTimeCompareResult {
-      case .OrderedSame:        // endTime is equal to bedTime
-        let timeWorkedInSeconds: NSTimeInterval = bedTime.timeIntervalSinceDate(fivePMStartTimeLimit)
-        
-        let timeWorkedInHours: Double = floor(timeWorkedInSeconds/secondsPerHour)
-        
-        let pay = timeWorkedInHours * payRate
-        
-        return pay
-        
-      case .OrderedAscending:   // endTime is earlier than bedTime
-        let timeWorkedInSeconds: NSTimeInterval = endTime.timeIntervalSinceDate(fivePMStartTimeLimit)
-        
-        let timeWorkedInHours: Double = floor(timeWorkedInSeconds/secondsPerHour)
-        
-        let pay = timeWorkedInHours * payRate
-        
-        return pay
-        
-      case .OrderedDescending:  // endTime is later than bedTime
-        let timeWorkedInSeconds: NSTimeInterval = bedTime.timeIntervalSinceDate(fivePMStartTimeLimit)
-        
-        let timeWorkedInHours: Double = floor(timeWorkedInSeconds/secondsPerHour)
-        
-        let pay = timeWorkedInHours * payRate
-        
-        return pay
-      }
+    case (.OrderedDescending, .OrderedSame), (.OrderedDescending, .OrderedDescending): // startTime later than 5PM, endTime equals or later than bedTime
+      timeWorkedInSeconds = bedTime.timeIntervalSinceDate(startTime)
       
-    case .OrderedDescending:  // startTime is later than 5PM
-      let endTimeBedTimeCompareResult = endTime.compare(bedTime)
+    case (.OrderedDescending, .OrderedAscending): // startTime later than 5PM, endTime earlier than bedTime
+      timeWorkedInSeconds = endTime.timeIntervalSinceDate(startTime)
       
-      switch endTimeBedTimeCompareResult {
-      case .OrderedSame:        // endTime is equal to bedTime
-        let timeWorkedInSeconds: NSTimeInterval = bedTime.timeIntervalSinceDate(startTime)
-        
-        let timeWorkedInHours: Double = floor(timeWorkedInSeconds/secondsPerHour)
-        
-        let pay = timeWorkedInHours * payRate
-        
-        return pay
-        
-      case .OrderedAscending:   // endTime is earlier than bedTime
-        let timeWorkedInSeconds: NSTimeInterval = endTime.timeIntervalSinceDate(startTime)
-        
-        let timeWorkedInHours: Double = floor(timeWorkedInSeconds/secondsPerHour)
-        
-        let pay = timeWorkedInHours * payRate
-        
-        return pay
-        
-      case .OrderedDescending:  // endTime is later than bedTime
-        let timeWorkedInSeconds: NSTimeInterval = bedTime.timeIntervalSinceDate(startTime)
-        
-        let timeWorkedInHours: Double = floor(timeWorkedInSeconds/secondsPerHour)
-        
-        let pay = timeWorkedInHours * payRate
-        
-        return pay
-      }
     }
+    
+    // Final pay calculation
+    let timeWorkedInHours: Double = floor(timeWorkedInSeconds/secondsPerHour)
+    
+    return timeWorkedInHours * payRate
     
   }
   

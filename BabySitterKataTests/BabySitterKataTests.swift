@@ -56,61 +56,122 @@ class BabySitterKataTests: XCTestCase {
   }
   
   func testsBabySitterCalculatePayFromStartTimeToBedTime() {
-    let babySitter = BabySitter()
     
-    let dateFormat = "yyyy-mm-dd HH:mm:ss"
-    let dateFormatter = NSDateFormatter()
-    dateFormatter.dateFormat = dateFormat
+    let payRate = babySitter.fivePMToBedTimePayRate
     
-    // startTime earlier than 5PM
-    if let startTime: NSDate = dateFormatter.dateFromString("2016-03-01 14:00:00"),
-      let endTime: NSDate = dateFormatter.dateFromString("2016-03-01 20:00:00"),
-      let bedTime: NSDate = dateFormatter.dateFromString("2016-03-01 20:00:00") {
+    // startTime earlier than 5PM, endTime earlier than 5PM
+    if let startTime: NSDate = dateFormatter.dateFromString(pmDate + "14:00:00"),
+      let endTime: NSDate = dateFormatter.dateFromString(pmDate + "16:00:00"),
+      let bedTime: NSDate = dateFormatter.dateFromString(pmDate + "20:00:00") {
         
-        let correctPay: Double = 12 * 3 // $12/hr for 3hr
+        let correctPay: Double = payRate * 0 // $12/hr for 0hr
         
         XCTAssert(babySitter.calculatePayFromStartTimeToBedTime(startTime, endTime: endTime, bedTime: bedTime) == correctPay, "BabySitter calculatePayFromStartTimeToBedTime incorrect.")
     }
     
-    // startTime later than bedTime
-    if let startTime: NSDate = dateFormatter.dateFromString("2016-03-01 21:00:00"),
-      let endTime: NSDate = dateFormatter.dateFromString("2016-03-01 23:00:00"),
-      let bedTime: NSDate = dateFormatter.dateFromString("2016-03-01 20:00:00") {
+    // startTime earlier than 5PM, endTime earlier than bedTime
+    if let startTime: NSDate = dateFormatter.dateFromString(pmDate + "14:00:00"),
+      let endTime: NSDate = dateFormatter.dateFromString(pmDate + "19:00:00"),
+      let bedTime: NSDate = dateFormatter.dateFromString(pmDate + "20:00:00") {
         
-        let correctPay: Double = 12 * 0 // $12/hr for 3hr
+        let correctPay: Double = payRate * 2 // $12/hr for 2hr
         
         XCTAssert(babySitter.calculatePayFromStartTimeToBedTime(startTime, endTime: endTime, bedTime: bedTime) == correctPay, "BabySitter calculatePayFromStartTimeToBedTime incorrect.")
     }
     
-    // endTime equals bedTime
+    // startTime earlier than 5PM, endTime equals bedTime
+    if let startTime: NSDate = dateFormatter.dateFromString(pmDate + "14:00:00"),
+      let endTime: NSDate = dateFormatter.dateFromString(pmDate + "20:00:00"),
+      let bedTime: NSDate = dateFormatter.dateFromString(pmDate + "20:00:00") {
+        
+        let correctPay: Double = payRate * 3 // $12/hr for 2hr
+        
+        XCTAssert(babySitter.calculatePayFromStartTimeToBedTime(startTime, endTime: endTime, bedTime: bedTime) == correctPay, "BabySitter calculatePayFromStartTimeToBedTime incorrect.")
+    }
+    
+    // startTime earlier than 5PM, endTime later than bedTime
+    if let startTime: NSDate = dateFormatter.dateFromString(pmDate + "14:00:00"),
+      let endTime: NSDate = dateFormatter.dateFromString(pmDate + "23:00:00"),
+      let bedTime: NSDate = dateFormatter.dateFromString(pmDate + "20:00:00") {
+        
+        let correctPay: Double = payRate * 3 // $12/hr for 2hr
+        
+        XCTAssert(babySitter.calculatePayFromStartTimeToBedTime(startTime, endTime: endTime, bedTime: bedTime) == correctPay, "BabySitter calculatePayFromStartTimeToBedTime incorrect.")
+    }
+    
+    // startTime equal to 5PM, endTime earlier than bedTime
+    if let startTime: NSDate = dateFormatter.dateFromString(pmDate + "17:00:00"),
+      let endTime: NSDate = dateFormatter.dateFromString(pmDate + "19:00:00"),
+      let bedTime: NSDate = dateFormatter.dateFromString(pmDate + "20:00:00") {
+        
+        let correctPay: Double = payRate * 2 // $12/hr for 2hr
+        
+        XCTAssert(babySitter.calculatePayFromStartTimeToBedTime(startTime, endTime: endTime, bedTime: bedTime) == correctPay, "BabySitter calculatePayFromStartTimeToBedTime incorrect.")
+    }
+    
+    // startTime equal to 5PM, endTime equal to bedTime
     if let startTime: NSDate = dateFormatter.dateFromString("2016-03-01 17:00:00"),
       let endTime: NSDate = dateFormatter.dateFromString("2016-03-01 20:00:00"),
       let bedTime: NSDate = dateFormatter.dateFromString("2016-03-01 20:00:00") {
         
-        let correctPay: Double = 12 * 3 // $12/hr for 3hr
+        let correctPay: Double = payRate * 3 // $12/hr for 3hr
         
         XCTAssert(babySitter.calculatePayFromStartTimeToBedTime(startTime, endTime: endTime, bedTime: bedTime) == correctPay, "BabySitter calculatePayFromStartTimeToBedTime incorrect.")
     }
     
-    // endTime earlier than bedTime
-    if let startTime: NSDate = dateFormatter.dateFromString("2016-03-01 17:00:00"),
-      let endTime: NSDate = dateFormatter.dateFromString("2016-03-01 19:00:00"),
-      let bedTime: NSDate = dateFormatter.dateFromString("2016-03-01 20:00:00") {
+    
+    
+    // startTime equal to 5PM, endTime later than bedTime
+    if let startTime: NSDate = dateFormatter.dateFromString(pmDate + "17:00:00"),
+      let endTime: NSDate = dateFormatter.dateFromString(pmDate + "23:00:00"),
+      let bedTime: NSDate = dateFormatter.dateFromString(pmDate + "20:00:00") {
         
-        let correctPay: Double = 12 * 2 // $12/hr for 2hr
+        let correctPay: Double = payRate * 3 // $12/hr for 3hr
         
         XCTAssert(babySitter.calculatePayFromStartTimeToBedTime(startTime, endTime: endTime, bedTime: bedTime) == correctPay, "BabySitter calculatePayFromStartTimeToBedTime incorrect.")
     }
     
-    // endTime later than bedTime
-    if let startTime: NSDate = dateFormatter.dateFromString("2016-03-01 17:00:00"),
-      let endTime: NSDate = dateFormatter.dateFromString("2016-03-01 22:00:00"),
-      let bedTime: NSDate = dateFormatter.dateFromString("2016-03-01 20:00:00") {
+    // startTime later than 5PM, endTime earlier than bedTime
+    if let startTime: NSDate = dateFormatter.dateFromString(pmDate + "18:00:00"),
+      let endTime: NSDate = dateFormatter.dateFromString(pmDate + "19:00:00"),
+      let bedTime: NSDate = dateFormatter.dateFromString(pmDate + "20:00:00") {
         
-        let correctPay: Double = 12 * 3 // $12/hr for 3hr
+        let correctPay: Double = payRate * 1 // $12/hr for 3hr
         
         XCTAssert(babySitter.calculatePayFromStartTimeToBedTime(startTime, endTime: endTime, bedTime: bedTime) == correctPay, "BabySitter calculatePayFromStartTimeToBedTime incorrect.")
     }
+    
+    // startTime later than 5PM, endTime equals bedTime
+    if let startTime: NSDate = dateFormatter.dateFromString(pmDate + "18:00:00"),
+      let endTime: NSDate = dateFormatter.dateFromString(pmDate + "20:00:00"),
+      let bedTime: NSDate = dateFormatter.dateFromString(pmDate + "20:00:00") {
+        
+        let correctPay: Double = payRate * 2 // $12/hr for 3hr
+        
+        XCTAssert(babySitter.calculatePayFromStartTimeToBedTime(startTime, endTime: endTime, bedTime: bedTime) == correctPay, "BabySitter calculatePayFromStartTimeToBedTime incorrect.")
+    }
+    
+    // startTime later than 5PM, endTime later than bedTime
+    if let startTime: NSDate = dateFormatter.dateFromString(pmDate + "18:00:00"),
+      let endTime: NSDate = dateFormatter.dateFromString(pmDate + "23:00:00"),
+      let bedTime: NSDate = dateFormatter.dateFromString(pmDate + "20:00:00") {
+        
+        let correctPay: Double = payRate * 1 // $12/hr for 3hr
+        
+        XCTAssert(babySitter.calculatePayFromStartTimeToBedTime(startTime, endTime: endTime, bedTime: bedTime) == correctPay, "BabySitter calculatePayFromStartTimeToBedTime incorrect.")
+    }
+    
+    // startTime later than bedTime, endTime later than bedTime
+    if let startTime: NSDate = dateFormatter.dateFromString(pmDate + "21:00:00"),
+      let endTime: NSDate = dateFormatter.dateFromString(pmDate + "23:00:00"),
+      let bedTime: NSDate = dateFormatter.dateFromString(pmDate + "20:00:00") {
+        
+        let correctPay: Double = payRate * 0 // $12/hr for 0hr
+        
+        XCTAssert(babySitter.calculatePayFromStartTimeToBedTime(startTime, endTime: endTime, bedTime: bedTime) == correctPay, "BabySitter calculatePayFromStartTimeToBedTime incorrect.")
+    }
+    
+    
     
   }
   
@@ -459,10 +520,10 @@ class BabySitterKataTests: XCTestCase {
   }
   
   override func tearDown() {
-    dateFormatter = nil
-    amDate = nil
-    pmDate = nil
-    babySitter = nil
+    //    dateFormatter = nil
+    //    amDate = nil
+    //    pmDate = nil
+    //    babySitter = nil
     
     super.tearDown()
   }
