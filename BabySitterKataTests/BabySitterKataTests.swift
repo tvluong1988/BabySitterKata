@@ -341,18 +341,15 @@ class BabySitterKataTests: XCTestCase {
   }
   
   func testsBabySitterCalculatePayFromStartTimeToBedTimeFractionalHours() {
-    let babySitter = BabySitter()
     
-    let dateFormat = "yyyy-mm-dd HH:mm:ss"
-    let dateFormatter = NSDateFormatter()
-    dateFormatter.dateFormat = dateFormat
+    let payRate = babySitter.fivePMToBedTimePayRate
     
     // Worked 2 hours
     if let startTime: NSDate = dateFormatter.dateFromString("2016-03-01 17:30:00"),
       let endTime: NSDate = dateFormatter.dateFromString("2016-03-01 19:30:00"),
       let bedTime: NSDate = dateFormatter.dateFromString("2016-03-01 20:00:00") {
         
-        let correctPay: Double = 12 * 2 // $12/hr for 3hr
+        let correctPay: Double = payRate * 2
         
         XCTAssert(babySitter.calculatePayFromStartTimeToBedTime(startTime, endTime: endTime, bedTime: bedTime) == correctPay, "BabySitter calculatePayFromStartTimeToBedTime incorrect.")
     }
@@ -362,7 +359,7 @@ class BabySitterKataTests: XCTestCase {
       let endTime: NSDate = dateFormatter.dateFromString("2016-03-01 20:00:00"),
       let bedTime: NSDate = dateFormatter.dateFromString("2016-03-01 20:00:00") {
         
-        let correctPay: Double = 12 * 2 // $12/hr for 3hr
+        let correctPay: Double = payRate * 2
         
         XCTAssert(babySitter.calculatePayFromStartTimeToBedTime(startTime, endTime: endTime, bedTime: bedTime) == correctPay, "BabySitter calculatePayFromStartTimeToBedTime incorrect.")
     }
@@ -370,18 +367,15 @@ class BabySitterKataTests: XCTestCase {
   }
   
   func testsBabySitterCalculatePayFromBedTimeToMidnightFractionalHours() {
-    let babySitter = BabySitter()
     
-    let dateFormat = "yyyy-mm-dd HH:mm:ss"
-    let dateFormatter = NSDateFormatter()
-    dateFormatter.dateFormat = dateFormat
+    let payRate = babySitter.bedTimeToMidnightPayRate
     
     // Worked 2 hours
     if let startTime: NSDate = dateFormatter.dateFromString("2016-03-01 17:00:00"),
       let endTime: NSDate = dateFormatter.dateFromString("2016-03-01 22:00:00"),
       let bedTime: NSDate = dateFormatter.dateFromString("2016-03-01 20:00:00") {
         
-        let correctPay: Double = 8 * 2 // $12/hr for 0hr
+        let correctPay: Double = payRate * 2
         
         XCTAssert(babySitter.calculatePayFromBedTimeToMidnight(startTime, endTime: endTime, bedTime: bedTime) == correctPay, "BabySitter calculatePayFromBedTimeToMidnight incorrect.")
     }
@@ -391,7 +385,7 @@ class BabySitterKataTests: XCTestCase {
       let endTime: NSDate = dateFormatter.dateFromString("2016-03-01 23:30:00"),
       let bedTime: NSDate = dateFormatter.dateFromString("2016-03-01 20:00:00") {
         
-        let correctPay: Double = 8 * 2 // $12/hr for 0hr
+        let correctPay: Double = payRate * 2
         
         XCTAssert(babySitter.calculatePayFromBedTimeToMidnight(startTime, endTime: endTime, bedTime: bedTime) == correctPay, "BabySitter calculatePayFromBedTimeToMidnight incorrect.")
     }
@@ -399,17 +393,14 @@ class BabySitterKataTests: XCTestCase {
   }
   
   func testsBabySitterCalculatePayFromMidnightToEndOfJobTimeFractionalHours() {
-    let babySitter = BabySitter()
     
-    let dateFormat = "yyyy-mm-dd HH:mm:ss"
-    let dateFormatter = NSDateFormatter()
-    dateFormatter.dateFormat = dateFormat
+    let payRate = babySitter.midnightTo4AMPayRate
     
     // Worked 2 hours
     if let startTime: NSDate = dateFormatter.dateFromString("2016-03-02 01:15:00"),
       let endTime: NSDate = dateFormatter.dateFromString("2016-03-02 03:15:00") {
         
-        let correctPay: Double = 16 * 2 // $16/hr for 0hr
+        let correctPay: Double = payRate * 2
         
         XCTAssert(babySitter.calculatePayFromMidnightToEndOfJobTime(startTime, endTime: endTime) == correctPay, "BabySitter calculatePayFromMidnightToEndOfJobTime incorrect.")
     }
@@ -418,7 +409,7 @@ class BabySitterKataTests: XCTestCase {
     if let startTime: NSDate = dateFormatter.dateFromString("2016-03-02 01:15:00"),
       let endTime: NSDate = dateFormatter.dateFromString("2016-03-02 03:45:00") {
         
-        let correctPay: Double = 16 * 2 // $16/hr for 0hr
+        let correctPay: Double = payRate * 2
         
         XCTAssert(babySitter.calculatePayFromMidnightToEndOfJobTime(startTime, endTime: endTime) == correctPay, "BabySitter calculatePayFromMidnightToEndOfJobTime incorrect.")
     }
