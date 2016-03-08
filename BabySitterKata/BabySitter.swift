@@ -19,8 +19,8 @@ class BabySitter {
     dateFormatter = NSDateFormatter()
     dateFormatter.dateFormat = dateFormat
     
-    fivePMStartTimeLimit = dateFormatter.dateFromString("2016-03-01 17:00:00")
-    fourAMEndTimeLimit = dateFormatter.dateFromString("2016-03-02 04:00:00")
+    fivePMStartTimeLimit = dateFormatter.dateFromString(pmDate + "17:00:00")
+    fourAMEndTimeLimit = dateFormatter.dateFromString(amDate + "04:00:00")
   }
   
   deinit {
@@ -35,19 +35,13 @@ class BabySitter {
   
   let fivePMStartTimeLimit: NSDate!
   let fourAMEndTimeLimit: NSDate!
+  let pmDate = "2016-03-01"
+  let amDate = "2016-03-02"
 }
 
 // MARK: - Work Time
 extension BabySitter {
   func setStartTime(startTime: NSDate) -> Bool {
-    
-    let dateFormat = "HH:mm:ss"
-    let dateFormatter = NSDateFormatter()
-    dateFormatter.dateFormat = dateFormat
-    
-    guard let fivePMStartTimeLimit: NSDate = dateFormatter.dateFromString("17:00:00") else {
-      return false
-    }
     
     let compareResult = startTime.compare(fivePMStartTimeLimit)
     

@@ -19,24 +19,18 @@ class BabySitterKataTests: XCTestCase {
   
   func testsBabySitterStartsNoEarlierThan5PM() {
     
-    let babySitter = BabySitter()
-    
-    let dateFormat = "HH:mm:ss"
-    let dateFormatter = NSDateFormatter()
-    dateFormatter.dateFormat = dateFormat
-    
     // startTime earlier than 5PM
-    if let startTime: NSDate = dateFormatter.dateFromString("01:00:22") {
+    if let startTime: NSDate = dateFormatter.dateFromString(pmDate + "01:00:00") {
       XCTAssert(babySitter.setStartTime(startTime) == false, "BabySitter started earlier than 5PM.")
     }
     
     // startTime equals to 5PM
-    if let startTime: NSDate = dateFormatter.dateFromString("017:00:00") {
+    if let startTime: NSDate = dateFormatter.dateFromString(pmDate + "017:00:00") {
       XCTAssert(babySitter.setStartTime(startTime), "BabySitter started earlier than 5PM.")
     }
     
     // startTime later than 5PM
-    if let startTime: NSDate = dateFormatter.dateFromString("22:44:22") {
+    if let startTime: NSDate = dateFormatter.dateFromString(pmDate + "22:00:00") {
       XCTAssert(babySitter.setStartTime(startTime), "BabySitter started earlier than 5PM.")
     }
     
@@ -462,13 +456,27 @@ class BabySitterKataTests: XCTestCase {
   // MARK: Lifecycle
   override func setUp() {
     super.setUp()
+    
+    babySitter = BabySitter()
+    dateFormatter = babySitter.dateFormatter
+    amDate = babySitter.amDate
+    pmDate = babySitter.pmDate
   }
   
   override func tearDown() {
+    dateFormatter = nil
+    amDate = nil
+    pmDate = nil
+    babySitter = nil
+    
     super.tearDown()
   }
   
   // MARK: Properties
+  var babySitter: BabySitter!
+  var dateFormatter: NSDateFormatter!
+  var amDate: String!
+  var pmDate: String!
 }
 
 
