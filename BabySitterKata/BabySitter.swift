@@ -14,8 +14,13 @@ class BabySitter {
   init() {
     print("init babysitter...")
     
-    self.startTime = nil
-    self.endTime = nil
+    startTime = nil
+    endTime = nil
+    dateFormatter = NSDateFormatter()
+    dateFormatter.dateFormat = dateFormat
+    
+    fivePMStartTimeLimit = dateFormatter.dateFromString("2016-03-01 17:00:00")
+    fourAMEndTimeLimit = dateFormatter.dateFromString("2016-03-02 04:00:00")
   }
   
   deinit {
@@ -25,6 +30,11 @@ class BabySitter {
   // MARK: Properties
   var startTime: NSDate?
   var endTime: NSDate?
+  let dateFormat = "yyyy-mm-dd HH:mm:ss"
+  let dateFormatter: NSDateFormatter!
+  
+  let fivePMStartTimeLimit: NSDate!
+  let fourAMEndTimeLimit: NSDate!
 }
 
 // MARK: - Work Time
