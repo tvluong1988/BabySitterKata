@@ -39,7 +39,7 @@ class BabySitter {
   let amDate = "2016-03-02"
 }
 
-// MARK: - Work Time
+// MARK: - Work Time Validation
 extension BabySitter {
   func setStartTime(startTime: NSDate) -> Bool {
     
@@ -49,44 +49,27 @@ extension BabySitter {
     case .OrderedAscending:   // startTime is earlier than 5PM
       return false
       
-    case .OrderedDescending:  // startTime is later than 5PM
-      self.startTime = startTime
-      return true
-      
-    case .OrderedSame:        // startTime is equal to 5PM
+    case .OrderedSame, .OrderedDescending:  // startTime is equal to or later than 5PM
       self.startTime = startTime
       return true
     }
-    
   }
   
   func setEndTime(endTime: NSDate) -> Bool {
-    let dateFormat = "HH:mm:ss"
-    let dateFormatter = NSDateFormatter()
-    dateFormatter.dateFormat = dateFormat
     
-    guard let fourAMTimeLimit: NSDate = dateFormatter.dateFromString("04:00:00") else {
-      return false
-    }
-    
-    let compareResult = endTime.compare(fourAMTimeLimit)
+    let compareResult = endTime.compare(fourAMEndTimeLimit)
     
     switch compareResult {
-    case .OrderedAscending:   // endTime is earlier than 4AM
+    case .OrderedSame, .OrderedAscending:   // endTime is equal to or earlier than 4AM
       self.endTime = endTime
       return true
       
     case .OrderedDescending:  // endTime is later than 4AM
       return false
-      
-    case .OrderedSame:        // endTime is equal to 4AM
-      self.endTime = endTime
-      return false
     }
-    
   }
+  
 }
-
 
 // MARK: - Payment Functions
 extension BabySitter {

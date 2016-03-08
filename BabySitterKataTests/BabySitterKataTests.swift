@@ -37,24 +37,19 @@ class BabySitterKataTests: XCTestCase {
   }
   
   func testsBabySitterLeavesNoLaterThan4AM() {
-    let babySitter = BabySitter()
-    
-    let dateFormat = "HH:mm:ss"
-    let dateFormatter = NSDateFormatter()
-    dateFormatter.dateFormat = dateFormat
     
     // endTime earlier than 4AM
-    if let endTime: NSDate = dateFormatter.dateFromString("03:33:44") {
+    if let endTime: NSDate = dateFormatter.dateFromString(amDate + "03:00:00") {
       XCTAssert(babySitter.setEndTime(endTime), "BabySitter left later than 4AM.")
     }
     
     // endTime equals to 4AM
-    if let endTime: NSDate = dateFormatter.dateFromString("04:00:00") {
+    if let endTime: NSDate = dateFormatter.dateFromString(amDate + "04:00:00") {
       XCTAssert(babySitter.setEndTime(endTime) == false, "BabySitter left later than 4AM.")
     }
     
     // endTime later than 4AM
-    if let endTime: NSDate = dateFormatter.dateFromString("05:33:44") {
+    if let endTime: NSDate = dateFormatter.dateFromString(amDate + "05:00:00") {
       XCTAssert(babySitter.setEndTime(endTime) == false, "BabySitter left later than 4AM.")
     }
     
