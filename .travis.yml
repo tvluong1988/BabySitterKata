@@ -8,4 +8,4 @@ xcode_project: BabySitterKata.xcodeproj
 
 xcode_scheme: BabySitterKata
 
-xcode_sdk: iphonesimulator9.3
+xcode_sdk: iphonesimulator8.1
