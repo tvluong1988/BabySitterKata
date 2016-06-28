@@ -1,3 +1,6 @@
+####Master branch build status: 
+![](https://travis-ci.org/tvluong1988/BabySitterKata.svg?branch=master)
+
 
 Babysitter Kata
 ===============
@@ -25,3 +28,5 @@ Test results
 <h3 align="left">
 <img src="testResults.png" alt="test results" />
 </h3>
+
+
