@@ -21,4 +21,4 @@ matrix:
 
 script:
 - set -o pipefail
-- xcodebuild clean test -project BabySitterKata.xcodeproj $MATRIX_TARGET GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | xcpretty
+- xcodebuild clean test -project BabySitterKata.xcodeproj $MATRIX_TARGET | xcpretty
