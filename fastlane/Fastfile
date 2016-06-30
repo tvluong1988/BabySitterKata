@@ -22,7 +22,7 @@ clean: true,
 code_coverage: true,
 skip_slack: true,
 sdk: "iphonesimulator9.3",
-destination: "name=iPhone6"
+destination: "name=iPhone 6"
 )
 end
 
