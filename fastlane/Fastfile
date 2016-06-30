@@ -30,7 +30,7 @@ desc "Calculate test code coverage score. Need to run test beforehand."
 lane :report_test_coverage do
 xcov(
 project: "BabySitterKata.xcodeproj",
-scheme: "BabySitterKata"
+scheme: "BabySitterKata",
 output_directory: "xcov_output"
 )
 end
