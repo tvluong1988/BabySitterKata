@@ -21,7 +21,7 @@ project: "BabySitterKata.xcodeproj",
 clean: true,
 code_coverage: true,
 skip_slack: true,
-sdk: "iphonesimulator"
+sdk: "iphonesimulator9.3"
 
 #destination: "name=iPhone 6"
 )
