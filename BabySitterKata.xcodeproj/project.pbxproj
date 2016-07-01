@@ -18,6 +18,9 @@
 		8BCC3B731C8DD20B00249684 /* BabySitterKataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BCC3B721C8DD20B00249684 /* BabySitterKataTests.swift */; };
 		8BCC3B7F1C8DD27800249684 /* BabySitterKataRules in Resources */ = {isa = PBXBuildFile; fileRef = 8BCC3B7E1C8DD27800249684 /* BabySitterKataRules */; };
 		8BCC3B811C8DD9DF00249684 /* BabySitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BCC3B801C8DD9DF00249684 /* BabySitter.swift */; };
+		8BE72A491D24C11B0058619A /* script.sh in Resources */ = {isa = PBXBuildFile; fileRef = 8BE72A481D24C11B0058619A /* script.sh */; };
+		8BE72A4B1D24C12A0058619A /* after_success_script.sh in Resources */ = {isa = PBXBuildFile; fileRef = 8BE72A4A1D24C12A0058619A /* after_success_script.sh */; };
+		8BE72A4E1D24C1940058619A /* Fastfile in Resources */ = {isa = PBXBuildFile; fileRef = 8BE72A4D1D24C1940058619A /* Fastfile */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +49,9 @@
 		8BCC3B741C8DD20B00249684 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8BCC3B7E1C8DD27800249684 /* BabySitterKataRules */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = BabySitterKataRules; sourceTree = "<group>"; };
 		8BCC3B801C8DD9DF00249684 /* BabySitter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BabySitter.swift; sourceTree = "<group>"; };
+		8BE72A481D24C11B0058619A /* script.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = script.sh; path = travis/script.sh; sourceTree = "<group>"; };
+		8BE72A4A1D24C12A0058619A /* after_success_script.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = after_success_script.sh; path = travis/after_success_script.sh; sourceTree = "<group>"; };
+		8BE72A4D1D24C1940058619A /* Fastfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Fastfile; path = fastlane/Fastfile; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +75,8 @@
 		8BCC3B511C8DD20B00249684 = {
 			isa = PBXGroup;
 			children = (
+				8BE72A4F1D24C1DE0058619A /* fastlane */,
+				8BE72A4C1D24C16B0058619A /* travis */,
 				8B4AC5911D221365005EC7A1 /* .travis.yml */,
 				8B60E9A41C8F2F6E00E032FE /* testResults.png */,
 				8B60E9A21C8F2F3A00E032FE /* README.md */,
@@ -117,6 +125,23 @@
 				8BCC3B691C8DD20B00249684 /* Info.plist */,
 			);
 			name = Support;
+			sourceTree = "<group>";
+		};
+		8BE72A4C1D24C16B0058619A /* travis */ = {
+			isa = PBXGroup;
+			children = (
+				8BE72A481D24C11B0058619A /* script.sh */,
+				8BE72A4A1D24C12A0058619A /* after_success_script.sh */,
+			);
+			name = travis;
+			sourceTree = "<group>";
+		};
+		8BE72A4F1D24C1DE0058619A /* fastlane */ = {
+			isa = PBXGroup;
+			children = (
+				8BE72A4D1D24C1940058619A /* Fastfile */,
+			);
+			name = fastlane;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -205,6 +230,9 @@
 				8B60E9A51C8F2F6E00E032FE /* testResults.png in Resources */,
 				8BCC3B681C8DD20B00249684 /* LaunchScreen.storyboard in Resources */,
 				8BCC3B651C8DD20B00249684 /* Assets.xcassets in Resources */,
+				8BE72A491D24C11B0058619A /* script.sh in Resources */,
+				8BE72A4B1D24C12A0058619A /* after_success_script.sh in Resources */,
+				8BE72A4E1D24C1940058619A /* Fastfile in Resources */,
 				8BCC3B631C8DD20B00249684 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

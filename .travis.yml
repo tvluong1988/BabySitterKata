@@ -1,11 +1,33 @@
-#Even though your project is in Swift, Travis only uses the objective-c value to know to build with Xcode command line tools. Since Xcode knows how to tell what’s in Swift and what’s in Objective-C, your Swift project will be just fine.
-language: objective-c
 
+language: objective-c
+cache: cocoapods
 osx_image: xcode7.3
 
+before_install:
+- gem install xcov --no-ri --no-rdoc --no-document
+- gem update fastlane --no-ri --no-rdoc --no-document
+
+script: travis/script.sh
+after_success: travis/after_success_script.sh
+
+
+#script:
+#- set -o pipefail
+#- xcodebuild clean test -workspace OpenFood.xcworkspace -scheme OpenFood -sdk iphonesimulator | xcpretty#Even though your project is in Swift, Travis only uses the objective-c value to know to build with Xcode command line tools. Since Xcode knows how to tell what’s in Swift and what’s in Objective-C, your Swift project will be just fine.
+#language: objective-c
+#os: ios
+#osx_image: xcode7.3
+
+#before_install:
+#- gem install xcpretty -N --no-ri --no-rdoc
+
 #Use the specified Xcode project file. Note that if you have a project you want to build using an .xcworkspace (for example, a project using CocoaPods), you can replace the xcode_project parameter with xcode_workspace and use your .xcworkspace file as the value instead of your .xcodeproj
-xcode_project: BabySitterKata.xcodeproj
+#xcode_project: BabySitterKata.xcodeproj
 
-xcode_scheme: BabySitterKata
+#xcode_scheme: BabySitterKata
 
-xcode_sdk: iphonesimulator9.3
+#xcode_sdk: iphonesimulator9.3
+
+#script:
+#- set -o pipefail
+#- xcodebuild clean test -project BabySitterKata.xcodeproj -scheme BabySitterKata -sdk iphonesimulator | xcpretty
