@@ -1,3 +1,7 @@
+####Master branch build status: 
+![Travis](https://travis-ci.org/tvluong1988/BabySitterKata.svg?branch=master)
+![platforms](https://img.shields.io/badge/platforms-iOS-blue.svg)
+![languages](https://img.shields.io/badge/languages-Swift-blue.svg)
 
 Babysitter Kata
 ===============
@@ -25,3 +29,5 @@ Test results
 <h3 align="left">
 <img src="testResults.png" alt="test results" />
 </h3>
+
+
